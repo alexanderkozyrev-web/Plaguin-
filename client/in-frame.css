@@ -1,0 +1,443 @@
+/**
+ * FitMe Studio — in-frame trim.
+ *
+ * Each module was built as a standalone panel and carries its own brand row.
+ * Under the Studio shell that row is a second title bar directly under the
+ * FitMe logo, so it goes away here. Nothing else is touched: no layout, no
+ * colour, no spacing. Rules are scoped to :root[data-fitme-studio] so the
+ * module still looks exactly like itself when opened outside the shell.
+ *
+ * The attribute is set by cep-bridge.js, which only runs in a child frame.
+ * Drop the <link> to this file and the module is visually untouched again.
+ *
+ */
+
+/* OrganizeMe: "OrganizeMe v3.0" */
+:root[data-fitme-studio] body > .header {
+  display: none;
+}
+
+/* Motion Kit: give the tool grid the space the title row used to hold. */
+:root[data-fitme-studio] #panel {
+  padding-top: 10px;
+}
+
+/* Tags: the "managed suffixes" pill is a static label, not state, so it makes
+   way for the Refresh button. The Selection card's pill IS state and stays —
+   hence the adjacent-sibling selector rather than .card-header .pill. */
+:root[data-fitme-studio] #actionsTitle + .pill {
+  display: none;
+}
+
+/* Tags: "ROBERT_VITALIK V1.0.0 — AE Localization Prep" is a second title bar
+   under the FitMe logo. Hidden only once in-frame-tags.js has moved Refresh
+   out of it — if that script does not run, the original header stays and the
+   button stays reachable. */
+:root[data-fitme-studio].fms-tags-moved .panel-header {
+  display: none;
+}
+
+/* ---------------------------------------------------------------- Motion */
+
+/* Text to Box carries a 36x24 icon in a rule sized for 24x24 squares, so it
+   rendered 26x17 — small, and sitting almost on top of its label. Widened to
+   its own aspect and given real air. Only this tool: the others are square
+   and look right as they are. */
+:root[data-fitme-studio] .tool.fms-wide-icon {
+  gap: 12px;
+  min-height: 78px;
+}
+
+:root[data-fitme-studio] .tool.fms-wide-icon svg {
+  width: 42px;
+  height: 28px;
+}
+
+/* The two inserts added by in-frame-motion.js: icon beside the label rather
+   than above it, so a full-width button does not waste a line on air. */
+:root[data-fitme-studio] .tool.is-inline {
+  flex-direction: row;
+  gap: 12px;
+  min-height: 46px;
+  padding: 8px 12px;
+}
+
+:root[data-fitme-studio] .tool.is-inline svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* ---------------------------------------------------------------- Subs */
+
+/* Style picker as a grid rather than a six-deep column.
+   The menu is anchored inside the narrow left settings column, so width is
+   taken from the panel (100vw inside the iframe) instead of the column —
+   otherwise three cards would be squeezed into half the panel. */
+:root[data-fitme-studio] .style-menu.open {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap);
+  width: calc(100vw - 20px);
+  max-width: 620px;
+  max-height: none;
+  overflow: visible;
+}
+
+/* Grid gap already spaces the cards; the stacked rule would add a stray
+   top margin to five of the six. */
+:root[data-fitme-studio] .style-menu .style-card + .style-card {
+  margin-top: 0;
+}
+
+/* Three cards need ~110px each to stay legible. Narrower than that and the
+   labels start wrapping, so drop to two columns. */
+@media (max-width: 380px) {
+  :root[data-fitme-studio] .style-menu.open {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ------------------------------------------------------- BODY search bar */
+
+/* Sits above the tool grid. The dropdown is absolutely positioned so the
+   grid does not jump down every time the list opens. */
+:root[data-fitme-studio] .fms-body {
+  position: relative;
+  margin-bottom: 10px;
+  z-index: 40;
+}
+
+:root[data-fitme-studio] .fms-body-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 28px 28px;
+  gap: 5px;
+}
+
+:root[data-fitme-studio] .fms-body-input {
+  min-width: 0;
+  padding: 9px 11px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+:root[data-fitme-studio] .fms-body-input::placeholder {
+  color: var(--ink-dim);
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+:root[data-fitme-studio] .fms-body-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+:root[data-fitme-studio] .fms-body-input:disabled { color: var(--ink-dim); }
+
+:root[data-fitme-studio] .fms-body-btn {
+  padding: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--ink);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+:root[data-fitme-studio] .fms-body-btn:hover { border-color: var(--accent-dim); }
+:root[data-fitme-studio] .fms-body-btn.is-wide { padding: 6px 0; width: 100%; }
+
+:root[data-fitme-studio] .fms-body-list {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  max-height: 260px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 5px;
+  list-style: none;
+  background: var(--surface-down);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.55);
+}
+
+:root[data-fitme-studio] .fms-body-item {
+  padding: 6px 8px;
+  border-radius: 5px;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+:root[data-fitme-studio] .fms-body-item:hover { background: var(--surface-hover); }
+
+:root[data-fitme-studio] .fms-body-empty {
+  padding: 6px 8px;
+  color: var(--ink-dim);
+}
+
+:root[data-fitme-studio] .fms-body-settings {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  display: grid;
+  gap: 7px;
+  padding: 9px;
+  background: var(--surface-down);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.55);
+}
+
+:root[data-fitme-studio] .fms-body-settings label {
+  display: grid;
+  gap: 3px;
+  color: var(--ink-dim);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+:root[data-fitme-studio] .fms-body-settings input {
+  padding: 6px 8px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  color: var(--ink);
+  font-size: 11px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* The hidden attribute only sets display:none from the UA sheet, so any
+   explicit display above outranks it. Both overlays set one, so both need
+   this or they are permanently open. */
+:root[data-fitme-studio] .fms-body-list[hidden],
+:root[data-fitme-studio] .fms-body-settings[hidden] {
+  display: none;
+}
+
+/* Body rows: name on the left, the locales that exist on the right. The
+   chips are the reason Airtable is the catalogue — that list is a curated
+   field, not something parsed out of filenames. */
+:root[data-fitme-studio] .fms-body-item.is-body {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: normal;
+}
+
+:root[data-fitme-studio] .fms-body-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+
+:root[data-fitme-studio] .fms-body-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  justify-content: flex-end;
+}
+
+:root[data-fitme-studio] .fms-chip {
+  padding: 1px 5px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--ink-dim);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+:root[data-fitme-studio] .fms-chip.is-en {
+  border-color: var(--accent-dim);
+  color: var(--accent);
+}
+
+:root[data-fitme-studio] .fms-body-back {
+  padding: 6px 8px;
+  margin-bottom: 3px;
+  border-bottom: 1px solid var(--line-soft);
+  color: var(--ink-dim);
+  font-size: 10px;
+  cursor: pointer;
+}
+
+:root[data-fitme-studio] .fms-body-back:hover { color: var(--accent); }
+
+/* One line per body: the name takes what it needs, the chips never wrap. */
+:root[data-fitme-studio] .fms-body-item.is-body { white-space: nowrap; }
+:root[data-fitme-studio] .fms-body-chips { flex-wrap: nowrap; flex: none; }
+:root[data-fitme-studio] .fms-chip.is-more { border-style: dashed; }
+
+/* Which subfolder a render came from — resize and locale folders often hold
+   files with identical names. */
+:root[data-fitme-studio] .fms-body-trail {
+  margin-left: 8px;
+  color: var(--ink-dim);
+  font-size: 9px;
+  font-weight: 400;
+}
+
+/* Download and import progress, shown where the results were. */
+:root[data-fitme-studio] .fms-body-progress {
+  padding: 8px 9px;
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+:root[data-fitme-studio] .fms-body-progress.is-ok { color: var(--accent); }
+:root[data-fitme-studio] .fms-body-progress.is-error {
+  color: var(--danger);
+  font-weight: 400;
+  white-space: normal;
+}
+
+/* Google sign-in row — the only thing left in the BODY settings now that
+   the Airtable token is baked into the build, so no divider under it. */
+:root[data-fitme-studio] .fms-body-auth {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+:root[data-fitme-studio] .fms-body-authstate {
+  flex: 1;
+  color: var(--ink-dim);
+  font-size: 10px;
+}
+
+:root[data-fitme-studio] .fms-body-authstate.is-on { color: var(--accent); }
+
+:root[data-fitme-studio] .fms-body-auth .fms-body-btn {
+  width: auto;
+  padding: 5px 10px;
+  font-size: 10px;
+}
+
+/* ---------------------------------------------------- Motion proportions */
+
+/* A one-column tool is a square at any panel width; a two-column tool keeps
+   its own height. The grid alone cannot express this — it stretches rows to
+   the tallest cell — so the span is turned into a class in
+   in-frame-motion.js and the ratio is held here. */
+:root[data-fitme-studio] .tool.fms-square {
+  aspect-ratio: 1 / 1;
+  min-height: 0;
+}
+
+:root[data-fitme-studio] .tool.fms-wide {
+  aspect-ratio: auto;
+  min-height: 62px;
+}
+
+/* TEXT WRAP: the label sits inside a selection frame with grab handles —
+   the thing the tool makes, not a picture of it. The eight handles are one
+   pseudo-element wearing eight box-shadows, which keeps them exactly on the
+   corners and edge midpoints however the button is sized. */
+:root[data-fitme-studio] .tool.fms-framed .tool-label {
+  position: relative;
+  padding: 11px 14px;
+  border: 1.5px solid var(--accent);
+  border-radius: 2px;
+  line-height: 1.15;
+}
+
+:root[data-fitme-studio] .tool.fms-framed .tool-label::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--accent), var(--accent)) left    top    / 6px 6px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) center  top    / 6px 6px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) right   top    / 6px 6px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) left    center / 6px 6px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) right   center / 6px 6px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) left    bottom / 6px 6px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) center  bottom / 6px 6px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) right   bottom / 6px 6px no-repeat;
+}
+
+/* ------------------------------------------------- Motion, narrow panels */
+
+/* Type scales with the panel instead of stepping at breakpoints.
+   
+   Labels have to survive down to a four-column grid 180px wide — about 38px
+   of usable cell — and a fixed size cannot do that without either overflowing
+   there or looking oversized at 500px. The linear term does the work and the
+   clamp stops it at both ends: 7px at 180px of panel, 11px at 400px, held
+   flat beyond. Inside the iframe 1vw is 1% of the panel, which is exactly the
+   measurement that matters. */
+:root[data-fitme-studio] .tool .tool-label {
+  font-size: clamp(7px, calc(3.7px + 1.82vw), 11px);
+  letter-spacing: clamp(0px, calc(-0.35px + 0.12vw), 0.06em);
+  word-break: keep-all;
+  overflow-wrap: normal;
+  hyphens: none;
+  line-height: 1.15;
+}
+
+/* Icons and padding follow the same curve, so a shrinking tile keeps its
+   proportions rather than becoming a big icon in a small box. */
+:root[data-fitme-studio] #panel .grid .tool {
+  padding: clamp(4px, 1.4vw, 10px);
+  gap: clamp(3px, 1.1vw, 8px);
+}
+
+:root[data-fitme-studio] #panel .grid .tool svg {
+  width: clamp(20px, 7.6vw, 34px);
+  height: clamp(20px, 7.6vw, 34px);
+}
+
+:root[data-fitme-studio] .tool.fms-wide-icon svg {
+  width: clamp(20px, 8vw, 42px);
+  height: clamp(14px, 5.4vw, 28px);
+}
+
+/* Four columns hold down to 180px. Below that a cell is narrower than the
+   shortest label, so the grid folds rather than clipping. */
+@media (max-width: 180px) {
+  :root[data-fitme-studio] #panel .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  :root[data-fitme-studio] #panel .grid .tool.fms-wide,
+  :root[data-fitme-studio] #panel .grid .anchor-grid {
+    grid-column: span 2;
+  }
+}
+
+/* TEXT WRAP: the frame hugs the words more closely than a normal tool's
+   padding would, so the button reads as a selection box rather than a label
+   floating in a rectangle. */
+:root[data-fitme-studio] .tool.fms-framed .tool-label {
+  position: relative;
+  padding: clamp(4px, 1.5vw, 8px) clamp(6px, 2.2vw, 11px);
+  border: 1.5px solid var(--accent);
+  border-radius: 2px;
+  line-height: 1.15;
+}
+
+:root[data-fitme-studio] .tool.fms-framed .tool-label::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--accent), var(--accent)) left    top    / 5px 5px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) center  top    / 5px 5px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) right   top    / 5px 5px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) left    center / 5px 5px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) right   center / 5px 5px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) left    bottom / 5px 5px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) center  bottom / 5px 5px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) right   bottom / 5px 5px no-repeat;
+}

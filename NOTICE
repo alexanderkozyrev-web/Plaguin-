@@ -1,0 +1,26 @@
+OrganizeMe
+Copyright 2025 Gismart
+
+This product includes software developed by PLAINLY LTD.
+
+Portions of the font collection logic in host/index.jsx and
+client/main.js are adapted from plainly-videos/after-effects-plugin
+(https://github.com/plainly-videos/after-effects-plugin):
+
+  Copyright 2024 PLAINLY LTD
+  Licensed under the Apache License, Version 2.0
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Adapted functions:
+  collect.ts   -> collectFontsPlainly()      (host/index.jsx)
+  utils.ts     -> getInstalledFontsBy*()     (host/index.jsx)
+  bridge       -> plIsFontInstalled()        (client/main.js)
+  utils.ts     -> finalizePath()             (client/main.js)
+  copyFonts.ts -> collectFontsPlainlyFlow()  (client/main.js)
+
+Modifications from the original:
+  - font problems report instead of aborting the export
+    (PLAINLY_STRICT_FONTS = true restores upstream behaviour)
+  - NFC normalisation added to finalizePath()
+  - per-layer read guarded against exceptions
+  - cross-check against app.project.usedFonts added

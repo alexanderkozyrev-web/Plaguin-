@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+  <!-- FitMe Studio: borrow CEP/Node from the parent frame. Remove to run standalone. -->
+  <script src="../../client/cep-bridge.js"></script>
+  <link rel="stylesheet" href="../../client/in-frame.css">
+    <title>OrganizeMe v3.0</title>
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="header">
+        <span class="title">OrganizeMe</span>
+        <span class="version" id="versionBadge">v3.0</span>
+    </div>
+
+    <div class="buttons">
+
+        <button id="organizeBtn" class="btn btn-default">
+            <span class="btn-icon">📁</span>
+            <span class="btn-label">Organize</span>
+            <span class="btn-desc">Sort project items into folders</span>
+        </button>
+
+        <button id="organizeCleanBtn" class="btn btn-default">
+            <span class="btn-icon">🧹</span>
+            <span class="btn-label">Organize &amp; Clean</span>
+            <span class="btn-desc">Reduce to selected comps, then organize</span>
+        </button>
+
+        <button id="collectBtn" class="btn btn-collect">
+            <span class="btn-icon">📦</span>
+            <span class="btn-label">Collect</span>
+            <span class="btn-desc">Gather all files into a folder</span>
+        </button>
+
+        <button id="blackMagicBtn" class="btn btn-magic">
+            <span class="btn-icon">🪄</span>
+            <span class="btn-label">Black Magic</span>
+            <span class="btn-desc">Clean → Organize → Collect</span>
+        </button>
+
+    </div>
+
+    <div id="progressWrap" class="progress-wrap hidden">
+        <div class="progress-bar-track">
+            <div id="progressBar" class="progress-bar"></div>
+        </div>
+        <div id="progressLabel" class="progress-label">Starting…</div>
+    </div>
+
+    <div id="status" class="status"></div>
+
+    <!-- v2.8: in-panel modal (Так/Ні confirmations + highlighted collect report) -->
+    <div id="modalOverlay" class="modal-overlay hidden">
+        <div class="modal">
+            <div id="modalTitle" class="modal-title"></div>
+            <div id="modalBody" class="modal-body"></div>
+            <div id="modalButtons" class="modal-buttons"></div>
+        </div>
+    </div>
+
+    <script src="CSInterface.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

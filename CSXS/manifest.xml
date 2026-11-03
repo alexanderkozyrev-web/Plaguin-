@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExtensionManifest Version="7.0"
+    ExtensionBundleId="com.gismart.fitmestudio"
+    ExtensionBundleVersion="1.3.1"
+    ExtensionBundleName="FitMe Studio"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <Author>Gismart Team</Author>
+    <Contact>team@gismart.com</Contact>
+    <Legal>MIT License. Bundles font-collection code from Plainly under Apache-2.0 — see NOTICE.</Legal>
+    <Abstract>FitMe Studio — Motion Kit, localization tagging, subtitle generation and project collection in one After Effects panel.</Abstract>
+
+    <ExtensionList>
+        <Extension Id="com.gismart.fitmestudio.panel" Version="1.3.1"/>
+    </ExtensionList>
+
+    <ExecutionEnvironment>
+        <HostList>
+            <!-- 25.0 is the floor set by the Subs module. -->
+            <Host Name="AEFT" Version="[25.0,99.9]"/>
+        </HostList>
+        <LocaleList>
+            <Locale Code="All"/>
+        </LocaleList>
+        <RequiredRuntimeList>
+            <RequiredRuntime Name="CSXS" Version="11.0"/>
+        </RequiredRuntimeList>
+    </ExecutionEnvironment>
+
+    <DispatchInfoList>
+        <Extension Id="com.gismart.fitmestudio.panel">
+            <DispatchInfo>
+                <Resources>
+                    <MainPath>./client/index.html</MainPath>
+                    <ScriptPath>./host/index.jsx</ScriptPath>
+                    <CEFCommandLine>
+                        <!-- union of what the four modules needed on their own -->
+                        <Parameter>--allow-file-access-from-files</Parameter>
+                        <Parameter>--allow-file-access</Parameter>
+                        <Parameter>--enable-nodejs</Parameter>
+                        <!-- Node in every frame, not just the top one. Without
+                             this, CEP gives require() to the main document only
+                             and the ORG module — which calls require() at the
+                             top of main.js — aborts before wiring a single
+                             button. Safe here: nothing in the four panels does
+                             UMD/CommonJS detection, so no library changes how
+                             it registers itself. -->
+                        <Parameter>--mixed-context</Parameter>
+                    </CEFCommandLine>
+                </Resources>
+                <Lifecycle>
+                    <AutoVisible>true</AutoVisible>
+                </Lifecycle>
+                <UI>
+                    <Type>Panel</Type>
+                    <Menu>FitMe Studio</Menu>
+                    <Geometry>
+                        <Size>
+                            <Width>400</Width>
+                            <Height>780</Height>
+                        </Size>
+                        <!-- union of the four minimums: Tags sets the width,
+                             Subs sets the height, plus the header + tab strip -->
+                        <MinSize>
+                            <Width>340</Width>
+                            <Height>560</Height>
+                        </MinSize>
+                        <MaxSize>
+                            <Width>700</Width>
+                            <Height>1400</Height>
+                        </MaxSize>
+                    </Geometry>
+                    <Icons>
+                        <Icon Type="Normal">./icons/icon.png</Icon>
+                        <Icon Type="RollOver">./icons/icon.png</Icon>
+                        <Icon Type="Disabled">./icons/icon-disabled.png</Icon>
+                        <Icon Type="DarkNormal">./icons/icon.png</Icon>
+                        <Icon Type="DarkRollOver">./icons/icon.png</Icon>
+                    </Icons>
+                </UI>
+            </DispatchInfo>
+        </Extension>
+    </DispatchInfoList>
+</ExtensionManifest>

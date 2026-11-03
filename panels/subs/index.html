@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+  <!-- FitMe Studio: borrow CEP/Node from the parent frame. Remove to run standalone. -->
+  <script src="../../client/cep-bridge.js"></script>
+  <link rel="stylesheet" href="../../client/in-frame.css">
+    <title>FitMe Subs</title>
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="panel.css">
+</head>
+<body>
+<div class="panel">
+
+    <!-- ── settings ────────────────────────────────────────────────── -->
+    <div class="settings-row">
+
+        <div class="settings-col styles-col">
+            <label class="picker-label">Subtitle Styles</label>
+            <div class="style-picker">
+                <div id="activeStyleCard" class="style-card active" data-style="classic">
+                    <div class="style-preview">
+                        <svg viewBox="0 0 120 44"><text x="60" y="30" text-anchor="middle" font-size="19" font-weight="700" fill="#fff" stroke="#000" stroke-width="4" paint-order="stroke fill">Hello</text></svg>
+                    </div>
+                    <div class="style-info"><h4>Classic</h4><p>Plain, no animation</p></div>
+                </div>
+                <button id="styleToggleBtn" class="picker-caret" type="button" aria-expanded="false" title="Choose style">&#9662;</button>
+
+                <div id="styleMenu" class="style-menu">
+                    <div class="style-card" data-style="classic">
+                        <div class="style-preview"><svg viewBox="0 0 120 44"><text x="60" y="30" text-anchor="middle" font-size="19" font-weight="700" fill="#fff" stroke="#000" stroke-width="4" paint-order="stroke fill">Hello</text></svg></div>
+                        <div class="style-info"><h4>Classic</h4><p>Plain, no animation</p></div>
+                    </div>
+                    <div class="style-card" data-style="bubble">
+                        <div class="style-preview"><svg viewBox="0 0 120 44"><rect x="30" y="12" width="60" height="22" rx="11" fill="#4A7FE0"/><text x="60" y="29" text-anchor="middle" font-size="17" font-weight="700" fill="#fff">Say Hi</text></svg></div>
+                        <div class="style-info"><h4>Bubble</h4><p>Speech bubble</p></div>
+                    </div>
+                    <div class="style-card" data-style="word-highlight">
+                        <div class="style-preview"><svg viewBox="0 0 120 44"><text x="60" y="30" text-anchor="middle" font-size="19" font-weight="800" fill="#FFD600" stroke="#000" stroke-width="4" paint-order="stroke fill">SAY</text></svg></div>
+                        <div class="style-info"><h4>Word Highlight</h4><p>Color active word</p></div>
+                    </div>
+                    <div class="style-card" data-style="word-bubble">
+                        <div class="style-preview"><svg viewBox="0 0 120 44"><rect x="58" y="12" width="42" height="22" rx="6" fill="#FFD54A"/><text x="60" y="29" text-anchor="middle" font-size="17" font-weight="700" fill="#fff" stroke="#000" stroke-width="4" paint-order="stroke fill">Say It</text></svg></div>
+                        <div class="style-info"><h4>Word Bubble</h4><p>Highlights word</p></div>
+                    </div>
+                    <div class="style-card" data-style="karaoke-wipe">
+                        <div class="style-preview"><svg viewBox="0 0 120 44"><text x="60" y="30" text-anchor="middle" font-size="19" font-weight="700" fill="#E9808B">Sing</text></svg></div>
+                        <div class="style-info"><h4>Karaoke</h4><p>Color fill</p></div>
+                    </div>
+                    <div class="style-card" data-style="underline-track">
+                        <div class="style-preview"><svg viewBox="0 0 120 44"><text x="60" y="28" text-anchor="middle" font-size="19" font-weight="700" fill="#fff">Read</text><rect x="38" y="32" width="44" height="3" fill="#4DB2FF"/></svg></div>
+                        <div class="style-info"><h4>Underline</h4><p>Line follows</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-col selects-col">
+            <div class="field">
+                <label for="providerSelect">Transcription</label>
+                <select id="providerSelect">
+                    <option value="elevenlabs">ElevenLabs Scribe v2</option>
+                    <option value="whisper">OpenAI Whisper (fallback)</option>
+                </select>
+            </div>
+            <div class="field">
+                <label for="boundaryMode">Sentence Boundary</label>
+                <select id="boundaryMode">
+                    <option value="punctuation_optional">Punctuation + Pause</option>
+                    <option value="punctuation_required">Punctuation Required</option>
+                    <option value="pause_only">Pause Only</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ── action ──────────────────────────────────────────────────── -->
+    <div class="action-row">
+            <button id="mainActionBtn" class="snap-btn" title="Render selected audio layers into one mixdown and build subtitles">SNAP SUBS</button>
+            <button id="modeToggleBtn" class="split-caret" type="button" title="Other subtitle types">&#9662;</button>
+            <div id="modeMenu" class="mode-menu">
+                <div class="mode-item" data-mode="smartwords">SNAP SUBS<span>1&ndash;4 word groups</span></div>
+                <div class="mode-item" data-mode="sentences">SENT<span>full sentences</span></div>
+                <div class="mode-item" data-mode="words">SUB<span>one word per layer</span></div>
+                <div class="mode-item" data-mode="srt">SRT<span>single layer, hold keys</span></div>
+        </div>
+    </div>
+
+    <div class="progress" id="progressContainer">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- ── log ─────────────────────────────────────────────────────── -->
+    <div class="log-bar">
+        <span class="log-label">LOG</span>
+        <button id="copyLogsBtn" type="button">Copy</button>
+        <button id="clearLogsBtn" type="button">Clear</button>
+        <button id="logToggleBtn" class="log-caret" type="button" aria-expanded="false" title="Show log">&#9662;</button>
+    </div>
+
+    <div id="logWrap" class="log-wrap collapsed">
+        <div id="logWindow" class="log-window"></div>
+    </div>
+
+    <div id="status" class="status-line">Ready</div>
+
+</div>
+
+    <script src="CSInterface.js"></script>
+    <script src="es-core.js"></script>
+    <script src="config.js"></script>
+    <script src="corrections.js"></script>
+    <script src="phrases.js"></script>
+    <script src="segmentation.js"></script>
+    <script src="expressions.js"></script>
+    <script src="lame.min.js"></script>
+    <script src="styles.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

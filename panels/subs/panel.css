@@ -1,0 +1,374 @@
+/**
+ * FitMe Subs — panel layout.
+ *
+ * Colour, typography, native controls and scrollbars come from theme.css.
+ * This file only places things.
+ *
+ * Still on CSS Grid with explicit tracks. The pre-1.0 version grew by patching
+ * flex rules and ended up with several competing .styles-col declarations,
+ * which is why the caret used to drift on top of the style card. Grid makes the
+ * geometry unambiguous: every column width is stated once.
+ *
+ * Class names here are the contract with main.js: .open on the two menus,
+ * .active on the style card, .collapsed on .log-wrap, and .log-line +
+ * .log-info / .log-warn / .log-error. Renaming one without the other is what
+ * silently detaches the dropdowns.
+ */
+
+body {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  max-width: 660px;
+  margin: 0 auto;
+  padding: 12px var(--gap) var(--gap);
+}
+
+/* ---------- settings: two equal columns, styles on the left ---------- */
+
+.settings-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  align-items: start;
+}
+
+.settings-col { min-width: 0; }
+
+.selects-col {
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 9px;
+}
+
+.field { min-width: 0; }
+
+label,
+.picker-label {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--ink-dim);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+select {
+  height: 28px;
+  padding: 0 22px 0 8px;
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath fill='%235E5E5E' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 10px;
+  -webkit-appearance: none;
+  appearance: none;
+  text-overflow: ellipsis;
+}
+
+/* ---------- style picker ---------- */
+
+.styles-col { position: relative; }
+
+/* card | caret — stated once, so the caret can never land on the card */
+.style-picker {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 22px;
+  gap: 5px;
+  align-items: stretch;
+}
+
+.style-card {
+  min-width: 0;
+  padding: 5px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 90ms linear, border-color 90ms linear;
+}
+
+.style-card:hover {
+  background: var(--surface-hover);
+  border-color: var(--accent-dim);
+}
+
+.style-card.active {
+  background: var(--surface-hover);
+  border-color: var(--accent);
+}
+
+.style-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+  overflow: hidden;
+  background: var(--surface-down);
+  border-radius: 4px;
+}
+
+/* The preview SVGs carry the real subtitle colours on purpose — they are a
+   sample of the render, not part of the panel skin. Leave their fills alone. */
+.style-preview svg { display: block; width: 100%; height: 100%; }
+
+.style-info {
+  padding-top: 4px;
+  text-align: center;
+}
+
+.style-info h4 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.style-info p {
+  margin: 1px 0 0;
+  color: var(--ink-dim);
+  font-size: 9px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.picker-caret {
+  padding: 0;
+  background: var(--surface-down);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--accent);
+  font-size: 10px;
+  transition: background 90ms linear, border-color 90ms linear;
+}
+
+.picker-caret:hover {
+  background: var(--surface-hover);
+  border-color: var(--accent-dim);
+}
+
+.picker-caret:disabled {
+  border-color: var(--line-soft);
+  color: var(--ink-dim);
+  cursor: default;
+}
+
+.style-menu {
+  display: none;
+  position: absolute;
+  top: 22px;
+  left: 0;
+  z-index: 60;
+  width: 100%;
+  min-width: 168px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: var(--gap);
+  background: var(--surface-down);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.55);
+}
+
+.style-menu.open { display: block; }
+.style-menu .style-card + .style-card { margin-top: var(--gap); }
+
+/* ---------- action button ---------- */
+
+.action-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 26px;
+  gap: 8px;
+  align-items: center;
+}
+
+.snap-btn {
+  min-width: 0;
+  height: 48px;
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  color: var(--bg);
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  transition: background 90ms linear, border-color 90ms linear;
+}
+
+.snap-btn:hover:not(:disabled) {
+  background: var(--accent-hot);
+  border-color: var(--accent-hot);
+}
+
+.snap-btn:active:not(:disabled) {
+  background: var(--accent-dim);
+  border-color: var(--accent-dim);
+}
+
+.snap-btn:disabled {
+  background: var(--surface);
+  border-color: var(--line-soft);
+  color: var(--ink-dim);
+  cursor: default;
+}
+
+.split-caret {
+  height: 48px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: var(--accent);
+  font-size: 13px;
+}
+
+.split-caret:hover { color: var(--accent-hot); }
+.split-caret:disabled { color: var(--ink-dim); cursor: default; }
+
+.mode-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 34px;
+  z-index: 60;
+  overflow: hidden;
+  background: var(--surface-down);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+}
+
+.mode-menu.open { display: block; }
+
+.mode-item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 12px;
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+}
+
+.mode-item span {
+  color: var(--ink-dim);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.mode-item:hover { background: var(--surface-hover); }
+
+/* ---------- progress ---------- */
+
+.progress {
+  display: none;
+  height: 3px;
+  overflow: hidden;
+  background: var(--surface-down);
+  border-radius: 2px;
+}
+
+.progress-bar {
+  width: 0;
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.2s;
+}
+
+/* ---------- log ---------- */
+
+.log-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.log-label {
+  color: var(--ink-dim);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.log-bar button {
+  padding: 6px 14px;
+  background: var(--surface-down);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--ink);
+  font-size: 10px;
+  transition: background 90ms linear, border-color 90ms linear;
+}
+
+.log-bar button:hover {
+  background: var(--surface-hover);
+  border-color: var(--accent-dim);
+}
+
+.log-caret {
+  padding: 6px 8px !important;
+  background: transparent !important;
+  border: none !important;
+  color: var(--accent) !important;
+}
+
+.log-wrap { overflow: hidden; transition: max-height 0.18s ease; }
+.log-wrap.collapsed { max-height: 0; }
+.log-wrap:not(.collapsed) { max-height: 260px; }
+
+.log-window {
+  height: 240px;
+  overflow-y: auto;
+  padding: 8px 10px;
+  background: var(--surface-down);
+  border: 1px solid var(--line-soft);
+  border-radius: 8px;
+  color: var(--ink-dim);
+  font-family: Menlo, Consolas, "DejaVu Sans Mono", monospace;
+  font-size: 11px;
+  line-height: 1.5;
+  user-select: text;
+  cursor: text;
+}
+
+.log-line { white-space: pre-wrap; word-break: break-word; }
+.log-info  { color: var(--ink-dim); }
+.log-warn  { color: var(--accent); }
+.log-error { color: var(--danger); }
+
+.status-line {
+  color: var(--ink-dim);
+  font-size: 10px;
+  text-align: center;
+  word-break: break-word;
+}
+
+/* ---------- very narrow panel ---------- */
+
+@media (max-width: 340px) {
+  .snap-btn { height: 42px; font-size: 16px; }
+  .split-caret { height: 42px; }
+  .style-preview { height: 30px; }
+}

@@ -1,0 +1,219 @@
+/**
+ * FitMe Studio — shell layout.
+ *
+ * Owns three things and nothing else: the brand row, the tab strip, and the
+ * frame that holds whichever module is showing. Every colour comes from
+ * theme.css, the same token file the four modules already share, so the shell
+ * and its contents cannot drift apart.
+ *
+ * Deliberately narrow class prefix (.studio-) — the modules live in iframes
+ * and cannot collide with this, but the prefix keeps it obvious which file a
+ * selector belongs to.
+ */
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  min-width: 0;
+}
+
+/* ---------- brand row ---------- */
+
+.studio-header {
+  display: flex;
+  /* Baseline, not centre: a replaced element's baseline is its bottom margin
+     edge, so this sits the bottom of the wordmark exactly on the STUDIO
+     baseline. Only works because logo-header.svg is trimmed to its ink — the
+     master logo carries 45 units of empty space underneath. */
+  align-items: baseline;
+  gap: 11px;
+  padding: 13px 14px 11px;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.studio-logo {
+  height: 25px;
+  width: auto;
+  display: block;
+  flex: none;
+  /* the artwork is already #FAD500; this only guards against a re-export */
+  -webkit-user-drag: none;
+}
+
+.studio-word {
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  line-height: 1;
+}
+
+/* ---------- tab strip ---------- */
+
+.studio-tabs {
+  display: flex;
+  align-items: baseline;
+  gap: 7%;
+  padding: 12px 14px 11px;
+  border-bottom: 1px solid var(--line-soft);
+  white-space: nowrap;
+}
+
+.studio-tab {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 2px 0;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  transition: color 90ms linear;
+}
+
+.studio-tab:hover { color: #9A9A9A; }
+
+.studio-tab[aria-selected="true"] {
+  color: var(--accent);
+}
+
+.studio-tab[aria-selected="true"]:hover { color: var(--accent-hot); }
+
+.studio-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Narrow panels: shrink rather than wrap or clip. */
+@media (max-width: 380px) {
+  .studio-tabs { gap: 5%; padding-left: 11px; padding-right: 11px; }
+  .studio-tab  { font-size: 15px; }
+  .studio-logo { height: 22px; }
+  .studio-word { font-size: 13px; }
+}
+
+@media (max-width: 330px) {
+  .studio-tabs { gap: 4%; }
+  .studio-tab  { font-size: 13px; }
+}
+
+/* ---------- module stage ---------- */
+
+.studio-stage {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.studio-pane {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+}
+
+.studio-pane.active { visibility: visible; }
+
+.studio-pane > iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: var(--bg);
+}
+
+/* ---------- diagnostics ---------- */
+
+.studio-word[role="button"] { cursor: pointer; }
+.studio-word[role="button"]:hover { color: var(--accent); }
+
+.studio-diag {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+.studio-diag-bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.studio-diag-title {
+  flex: 1;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+.studio-diag-bar button {
+  padding: 4px 11px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--ink);
+}
+
+.studio-diag-bar button:hover { border-color: var(--accent-dim); }
+
+.studio-diag-body {
+  flex: 1;
+  margin: 0;
+  padding: 11px 12px;
+  overflow: auto;
+  font: 10px/1.5 ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  color: var(--ink);
+  white-space: pre;
+  user-select: text;
+  cursor: text;
+}
+
+/* ---------- fault banner ---------- */
+
+.studio-fault {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px 12px 11px;
+  background: var(--surface);
+  border-top: 1px solid var(--danger);
+  z-index: 10;
+}
+
+.studio-fault-title {
+  margin: 0 0 6px;
+  font-weight: 700;
+  color: var(--danger);
+}
+
+.studio-fault-body {
+  margin: 0 0 8px;
+  max-height: 96px;
+  overflow: auto;
+  font: 10px/1.45 ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  color: var(--ink-dim);
+  white-space: pre-wrap;
+  word-break: break-word;
+  user-select: text;
+  cursor: text;
+}
+
+.studio-fault-retry {
+  padding: 5px 12px;
+  background: var(--surface-hover);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--ink);
+}
+
+.studio-fault-retry:hover { border-color: var(--accent-dim); }

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+  <!-- FitMe Studio: borrow CEP/Node from the parent frame. Remove to run standalone. -->
+  <script src="../../client/cep-bridge.js"></script>
+  <link rel="stylesheet" href="../../client/in-frame.css">
+  <script src="../../client/in-frame-tags.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitMe Studio — Tags</title>
+    <link rel="stylesheet" href="./client/theme.css">
+    <link rel="stylesheet" href="./client/styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+
+      <header class="panel-header">
+        <div class="header-left">
+          <span class="app-title">Robert_Vitalik v1.0.0</span>
+          <span class="eyebrow">AE Localization Prep</span>
+        </div>
+        <button id="refreshSelection" class="icon-button" type="button" title="Refresh selection">Refresh</button>
+      </header>
+
+      <p id="statusLine" class="status-line muted">Waiting for host connection.</p>
+
+      <section class="card" aria-labelledby="actionsTitle">
+        <div class="card-header">
+          <h2 id="actionsTitle">Tag Layers</h2>
+          <span class="pill accent-teal">managed suffixes</span>
+        </div>
+        <div class="button-grid">
+          <button id="tagText" class="action-button accent-teal" type="button" data-action="text" data-hint="Add [text] to selected text layers. The pipeline will localize text and preserve style.">Text</button>
+          <button id="tagSpeech" class="action-button accent-amber" type="button" data-action="speech" data-hint="Add [speech] to spoken-media layers. Works for video with dialogue and audio-only files.">Speech</button>
+          <button id="tagSpeechNoSubs" class="action-button accent-amber" type="button" data-action="speechnosubs" data-hint="Add [speechnosubs] to spoken-media layers. Localizes audio or video but skips generated subtitles.">Speech No Subs</button>
+          <button id="tagSpeechLink" class="action-button accent-outline" type="button" data-action="speechlink" data-hint="Auto-create one shared standalone [speechlink:<id>] for the selected text and/or spoken-media layers. This flow localizes media without generated subtitles and links the result back into the selected text layers.">Speech Link</button>
+          <button id="tagSubs" class="action-button accent-coral" type="button" data-action="subs" data-hint="Add [subs] to subtitle text, background, or subs-only video layers that must be removed and used as subtitle placement hints.">Subs</button>
+          <button id="tagSubsComp" class="action-button accent-coral" type="button" data-action="subscomp" data-hint="Add [subscomp] to subtitle-only precomp layers to be removed as a whole.">Subs Comp</button>
+          <button id="tagComp" class="action-button accent-outline" type="button" data-action="comp" data-hint="Add [comp] to the active top-level comp. Use it on every real final render comp.">Comp</button>
+          <button id="clearTag" class="action-button accent-muted" type="button" data-action="clear" data-hint="Remove any managed Robert_Vitalik tag from the selected layers.">Clear</button>
+          <button id="analyzeProject" class="action-button accent-outline" type="button" data-action="analyze" data-hint="Scan the project and show counts, resolved actions, and warnings.">Analyze</button>
+          <button id="tagBody" class="action-button accent-outline" type="button" data-action="body" data-hint="Add [body] to the selected layers, precomps included, to mark the main body segment of the creative as opposed to the hook.">Body</button>
+          <button id="renderHook" class="action-button hook-button" type="button" data-action="hookrender" data-hint="Render the selected layers into one 10 Mbps / 24fps MP4, name it HOOK-{variation}-{N}-{project}.mp4 and place it above the selection. Originals stay, muted.">HOOK RENDER</button>
+        </div>
+
+        <div class="hook-controls">
+          <select id="hookScope" title="Where to look for clip numbers that are already taken">
+            <option value="comp">numbers: this comp</option>
+            <option value="project">numbers: whole AE project</option>
+            <option value="all" selected>numbers: project + disk</option>
+          </select>
+          <button id="hookWhy" class="icon-button" type="button" title="Dry run: show the next name and where the number came from">Why this number</button>
+          <button id="hookTemplates" class="icon-button" type="button" title="List the Output Module templates on this machine">Templates</button>
+        </div>
+
+        <p id="hintLine" class="hint-line">Hover a button to see what it does.</p>
+      </section>
+
+      <section class="card" aria-labelledby="selectionTitle">
+        <div class="card-header">
+          <h2 id="selectionTitle">Selection</h2>
+          <span id="selectionBadge" class="pill muted">No active comp</span>
+        </div>
+        <p id="selectionSummary" class="muted small">Open a comp and select layers to start tagging.</p>
+        <div id="selectionList" class="selection-list"></div>
+      </section>
+
+    </div>
+
+    <div id="analysisModal" class="modal hidden" aria-hidden="true">
+      <div class="modal-backdrop" data-close-modal="true"></div>
+      <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="analysisTitle">
+        <div class="modal-header">
+          <h2 id="analysisTitle">Project Scan</h2>
+          <button id="closeAnalysis" class="icon-button" type="button" title="Close">X</button>
+        </div>
+        <div id="analysisContent" class="analysis-content">
+          <p class="muted small">Run Analyze to populate the summary.</p>
+        </div>
+      </div>
+    </div>
+
+    <script src="./lib/CSInterface.js"></script>
+    <script src="./client/panel.js"></script>
+  </body>
+</html>

@@ -1,0 +1,95 @@
+/**
+ * FitMe panel theme — shared skin, extracted from Motion Kit 1.2.1.
+ *
+ * This file is byte-identical across FitMe Subs, OrganizeMe and Robert_Vitalik.
+ * It owns colour, rhythm, native-control defaults and scrollbars — nothing that
+ * depends on one panel's layout. Each panel's own stylesheet owns its grid and
+ * its class names, and reads everything visual from the tokens below.
+ *
+ * Three colours carry everything: yellow for anything actionable, near-black
+ * for ground, grey for structure. Coral is the only alarm. Lime appears once,
+ * for "this finished cleanly".
+ *
+ * Changing a value here changes all four panels. That is the point — do not
+ * fork it per panel.
+ */
+
+:root {
+  --accent: #FAD500;
+  --accent-hot: #FFE23B;
+  --accent-dim: #C9AB00;
+
+  --bg: #111111;
+  --surface: #171717;
+  --surface-hover: #1F1F1F;
+  --surface-down: #0B0B0B;
+
+  --line: #5E5E5E;
+  --line-soft: #2B2B2B;
+
+  --ink: #EDEDED;
+  --ink-dim: #5E5E5E;
+
+  --danger: #FF6B4A;
+  --ok: #9BD46A;
+
+  --gap: 7px;
+  --radius: 9px;
+
+  /* Tag-family markers. Desaturated on purpose: they group buttons at a
+     glance without competing with the yellow that means "press me". */
+  --mark-text: #6FB7C9;
+  --mark-speech: #C99A4E;
+  --mark-subs: #C97A66;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; height: 100%; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font: 11px/1.2 -apple-system, "Segoe UI", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  user-select: none;
+  cursor: default;
+}
+
+/* ---------- native controls ---------- */
+
+button,
+select,
+input,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button { cursor: pointer; }
+
+select {
+  width: 100%;
+  padding: 7px 6px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+select:hover { border-color: var(--accent-dim); }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+/* ---------- scrollbars ---------- */
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--line-soft); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--line); }
+
+/* ---------- utility ---------- */
+
+.hidden { display: none !important; }
