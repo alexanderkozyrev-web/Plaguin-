@@ -26,11 +26,9 @@ body {
 
 .studio-header {
   display: flex;
-  /* Baseline, not centre: a replaced element's baseline is its bottom margin
-     edge, so this sits the bottom of the wordmark exactly on the STUDIO
-     baseline. Only works because logo-header.svg is trimmed to its ink — the
-     master logo carries 45 units of empty space underneath. */
-  align-items: baseline;
+  /* Centre, not baseline: the Spilio lockup is a mark plus a wordmark and is
+     taller than the STUDIO word, so the word sits on the lockup's middle. */
+  align-items: center;
   gap: 11px;
   padding: 13px 14px 11px;
   border-bottom: 1px solid var(--line-soft);

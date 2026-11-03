@@ -419,7 +419,7 @@ async function renderMixToWav(sel) {
                     if (it.status === RQItemStatus.QUEUED) { it.render = false; disabled.push(q); }
                 }
 
-                app.beginUndoGroup("FitMe Subs mixdown");
+                app.beginUndoGroup("Spilio Subs mixdown");
                 undoOpen = true;
 
                 tempComp = app.project.items.addComp(
@@ -1010,7 +1010,7 @@ async function ensureSubsPrecomp(sel, reuseLayerName) {
                 var comp = resolveTargetComp(${meta}, "compItemIndex", "compName");
                 if (!comp) return "ERROR:Cannot resolve composition";
 
-                app.beginUndoGroup("FitMe Subs: subtitles comp");
+                app.beginUndoGroup("Spilio Subs: subtitles comp");
                 undoOpen = true;
 
                 var reuseName = ${reuse};
@@ -1180,7 +1180,7 @@ async function createTemplateLayer(target, mode) {
             try {
                 var comp = resolveTaggedComp(${meta});
                 if (!comp) return "ERROR:Cannot resolve subtitles comp";
-                app.beginUndoGroup("FitMe Subs: template");
+                app.beginUndoGroup("Spilio Subs: template");
                 undoOpen = true;
                 var _subtitleY = 0;
                 var _subtitleTopY = 0;
@@ -1223,7 +1223,7 @@ async function duplicateBatch(target, jobPath, from, to, mode) {
                 jf.close();
                 var data = JSON.parse(raw);
 
-                app.beginUndoGroup("FitMe Subs: subtitles ${from}");
+                app.beginUndoGroup("Spilio Subs: subtitles ${from}");
                 undoOpen = true;
 
                 var baseDoc = template.property("Source Text").value;
@@ -1269,7 +1269,7 @@ async function removeTemplateLayer(target) {
             try {
                 var comp = resolveTaggedComp(${meta});
                 if (!comp) return "ERROR:Cannot resolve subtitles comp";
-                app.beginUndoGroup("FitMe Subs: cleanup");
+                app.beginUndoGroup("Spilio Subs: cleanup");
                 for (var i = comp.numLayers; i >= 1; i--) {
                     if (String(comp.layer(i).name) === "SubPlugin_tpl") comp.layer(i).remove();
                 }
@@ -1387,7 +1387,7 @@ async function buildSrtLayer(layersData, target) {
                 jf.close();
                 if (!data.length) return "ERROR:No subtitle data";
 
-                app.beginUndoGroup("FitMe Subs: SRT layer");
+                app.beginUndoGroup("Spilio Subs: SRT layer");
                 undoOpen = true;
 
                 var _subtitleY = 0;
@@ -1823,7 +1823,7 @@ async function clearSubsPrecomp(target) {
             try {
                 var comp = resolveTaggedComp(${meta});
                 if (!comp) return "ERROR:Cannot resolve subtitles comp";
-                app.beginUndoGroup("FitMe Subs: clear subtitles");
+                app.beginUndoGroup("Spilio Subs: clear subtitles");
                 undoOpen = true;
                 for (var i = comp.numLayers; i >= 1; i--) {
                     try { comp.layer(i).remove(); } catch(e) {}
