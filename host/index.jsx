@@ -5415,7 +5415,7 @@ var DISCLAIMER_VARIANTS = [
     "Generative AI used. Following exercise and diet plans is the key in your fitness journey and greatly impacts results. In 4 weeks users can typically expect to lose not more than 1-2 lbs per week. Individual results may vary.",
     // Short (A/B test variant, v2.6)
     "Generative AI used. Actor portrayal. Fictional story. Results may vary.",
-    // Current wording inserted by Motion > Disclaimer (FitMe Studio 1.3.1+)
+    // Current wording inserted by Motion > Disclaimer (FitMe Studio 1.3.2+)
     "This video contains AI-generated content"
 ];
 var DISCLAIMER_MIN_WORDS = 20;   // structural fallback (space-separated scripts)
