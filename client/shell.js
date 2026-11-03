@@ -1,5 +1,5 @@
 /**
- * FitMe Studio 1.3.1 — shell.
+ * FitMe Studio 1.3.2 — shell.
  *
  * Responsibilities, in full:
  *   1. make sure the four host modules got evaluated;
@@ -91,7 +91,7 @@
     var lines = [];
     var i, name, frame, d;
 
-    lines.push("FitMe Studio 1.3.1");
+    lines.push("FitMe Studio 1.3.2");
     lines.push("shell __adobe_cep__ : " + (cep ? "yes" : "NO"));
     lines.push("shell require       : " + (typeof window.require === "function" ? "yes" : "no"));
     lines.push("shell cep.fs        : " + (window.cep && window.cep.fs ? "yes" : "no"));

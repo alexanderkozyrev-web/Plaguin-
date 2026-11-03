@@ -15,7 +15,7 @@ The shipped build carries API keys inside the code. They are replaced here with 
 `host/index.jsx` is generated — edit `host/modules/*.jsx`, then run:
 
 ```bash
-python3 tools/gen-host.py 1.3.1
+python3 tools/gen-host.py 1.3.2
 ```
 
 Package the folder with ZXPSignCmd (the `META-INF/` signature of the original build is not kept here).

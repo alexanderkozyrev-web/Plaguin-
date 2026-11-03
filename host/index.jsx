@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------ *
- * FitMe Studio 1.3.1 — host.
+ * FitMe Studio 1.3.2 — host.
  *
  * GENERATED FILE. Do not edit.
  * Source: host/modules/*.jsx  ->  tools/gen-host.py
@@ -17,7 +17,7 @@
 #target aftereffects
 
 $.global.FitMeStudio = $.global.FitMeStudio || {};
-$.global.FitMeStudio.VERSION = "1.3.1";
+$.global.FitMeStudio.VERSION = "1.3.2";
 $.global.FitMeStudio.MODULES = ["subs.jsx", "motion-kit.jsx", "studio-inserts.jsx", "tags.jsx", "org.jsx"];
 
 /**
