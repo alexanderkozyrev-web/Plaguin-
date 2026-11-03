@@ -1,5 +1,5 @@
 /**
- * Spilio Studio 1.3.2 — shell.
+ * Spilio 1.3.2 — shell.
  *
  * Responsibilities, in full:
  *   1. make sure the four host modules got evaluated;
@@ -37,7 +37,7 @@
   var diagBody  = document.getElementById("diagBody");
   var diagCopy  = document.getElementById("diagCopy");
   var diagClose = document.getElementById("diagClose");
-  var studioWord = document.getElementById("studioWord");
+  var studioLogo = document.getElementById("studioLogo");
 
   var lastStatus = null;
 
@@ -91,7 +91,7 @@
     var lines = [];
     var i, name, frame, d;
 
-    lines.push("Spilio Studio 1.3.2");
+    lines.push("Spilio 1.3.2");
     lines.push("shell __adobe_cep__ : " + (cep ? "yes" : "NO"));
     lines.push("shell require       : " + (typeof window.require === "function" ? "yes" : "no"));
     lines.push("shell cep.fs        : " + (window.cep && window.cep.fs ? "yes" : "no"));
@@ -277,8 +277,8 @@
     ev.preventDefault();
   });
 
-  studioWord.addEventListener("click", openDiagnostics);
-  studioWord.addEventListener("keydown", function (ev) {
+  studioLogo.addEventListener("click", openDiagnostics);
+  studioLogo.addEventListener("keydown", function (ev) {
     if (ev.key === "Enter" || ev.key === " ") { openDiagnostics(); ev.preventDefault(); }
   });
 

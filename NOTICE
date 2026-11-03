@@ -11,6 +11,11 @@ client/main.js are adapted from plainly-videos/after-effects-plugin
   Licensed under the Apache License, Version 2.0
   http://www.apache.org/licenses/LICENSE-2.0
 
+Fonts (client/assets/fonts/):
+  Unbounded — Copyright 2022 The Unbounded Project Authors, SIL OFL 1.1
+  Onest     — Copyright 2023 The Onest Project Authors, SIL OFL 1.1
+  Both subset to Latin + Cyrillic; licences alongside the files.
+
 Adapted functions:
   collect.ts   -> collectFontsPlainly()      (host/index.jsx)
   utils.ts     -> getInstalledFontsBy*()     (host/index.jsx)

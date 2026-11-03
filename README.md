@@ -1,6 +1,6 @@
-# Spilio Studio — After Effects CEP extension
+# Spilio — After Effects CEP extension
 
-Source of the Spilio Studio panel (Motion Kit, Tags, Subs, Org) for After Effects 25+.
+Source of the Spilio panel (Motion Kit, Tags, Subs, Org) for After Effects 25+.
 
 ## Credentials are NOT in this repository
 

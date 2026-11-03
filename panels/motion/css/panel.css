@@ -1,8 +1,8 @@
 /**
  * Motion Kit — panel skin.
  *
- * Three colours carry everything: yellow for anything actionable, near-black
- * for ground, grey for structure.
+ * Colours follow the Spilio brand kit: sky blue for anything actionable,
+ * #1a1a1a for ground, slate for structure.
  *
  * One 4-column grid holds the whole panel. Class names here are the contract
  * with main.js: .grid, .tool, .tool-label, .anchor-grid, .anchor-cell, and
@@ -11,18 +11,22 @@
  */
 
 :root {
-  --accent: #FAD500;
-  --accent-hot: #FFE23B;
-  --accent-dim: #C9AB00;
-  --bg: #111111;
-  --surface: #171717;
-  --surface-hover: #1F1F1F;
-  --surface-down: #0B0B0B;
-  --line: #5E5E5E;
-  --line-soft: #2B2B2B;
-  --ink: #EDEDED;
-  --ink-dim: #5E5E5E;
+  /* Same tokens as client/theme.css — Spilio brand kit. */
+  --accent: #A6BAC8;
+  --accent-hot: #C4D4DE;
+  --accent-dim: #7F94A3;
+  --bg: #1A1A1A;
+  --surface: #222222;
+  --surface-hover: #2A2A2A;
+  --surface-down: #141414;
+  --line: #4D5A63;
+  --line-soft: #2C3136;
+  --ink: #FAFAFA;
+  --ink-dim: #7E8A93;
   --danger: #FF6B4A;
+  --ok: #D1E6D2;
+  --font-body: "Onest", -apple-system, "Segoe UI", system-ui, sans-serif;
+  --font-display: "Unbounded", "Onest", -apple-system, "Segoe UI", system-ui, sans-serif;
 
   --gap: 7px;
   --radius: 9px;
@@ -37,7 +41,7 @@ body {
   flex-direction: column;
   background: var(--bg);
   color: var(--ink);
-  font: 11px/1.2 -apple-system, "Segoe UI", system-ui, sans-serif;
+  font: 11px/1.25 var(--font-body);
   -webkit-font-smoothing: antialiased;
   overflow: hidden;
   user-select: none;

@@ -1,37 +1,46 @@
 /**
- * FitMe panel theme — shared skin, extracted from Motion Kit 1.2.1.
+ * Spilio panel theme — shared skin, extracted from Motion Kit 1.2.1.
  *
- * This file is byte-identical across FitMe Subs, OrganizeMe and Robert_Vitalik.
+ * This file is byte-identical across Spilio Subs, OrganizeMe and Robert_Vitalik.
  * It owns colour, rhythm, native-control defaults and scrollbars — nothing that
  * depends on one panel's layout. Each panel's own stylesheet owns its grid and
  * its class names, and reads everything visual from the tokens below.
  *
- * Three colours carry everything: yellow for anything actionable, near-black
- * for ground, grey for structure. Coral is the only alarm. Lime appears once,
- * for "this finished cleanly".
+ * Colours and type follow the Spilio brand kit: sky blue for anything
+ * actionable, #1a1a1a for ground, slate for structure, mint for "this finished
+ * cleanly". Coral is the only alarm. Unbounded carries headings and tabs,
+ * Onest carries everything else (the faces are loaded by client/fonts.css).
  *
  * Changing a value here changes all four panels. That is the point — do not
  * fork it per panel.
  */
 
 :root {
-  --accent: #FAD500;
-  --accent-hot: #FFE23B;
-  --accent-dim: #C9AB00;
+  /* Spilio brand kit: #1a1a1a ground, #fafafa ink, #334049 slate,
+     #a6bac8 sky (the one actionable colour), #d1e6d2 mint for "done". */
+  --accent: #A6BAC8;
+  --accent-hot: #C4D4DE;
+  --accent-dim: #7F94A3;
 
-  --bg: #111111;
-  --surface: #171717;
-  --surface-hover: #1F1F1F;
-  --surface-down: #0B0B0B;
+  --bg: #1A1A1A;
+  --surface: #222222;
+  --surface-hover: #2A2A2A;
+  --surface-down: #141414;
 
-  --line: #5E5E5E;
-  --line-soft: #2B2B2B;
+  --line: #4D5A63;
+  --line-soft: #2C3136;
 
-  --ink: #EDEDED;
-  --ink-dim: #5E5E5E;
+  --ink: #FAFAFA;
+  --ink-dim: #7E8A93;
+
+  --brand-slate: #334049;
+  --brand-mint: #D1E6D2;
 
   --danger: #FF6B4A;
-  --ok: #9BD46A;
+  --ok: #D1E6D2;
+
+  --font-body: "Onest", -apple-system, "Segoe UI", system-ui, sans-serif;
+  --font-display: "Unbounded", "Onest", -apple-system, "Segoe UI", system-ui, sans-serif;
 
   --gap: 7px;
   --radius: 9px;
@@ -50,11 +59,22 @@ html, body { margin: 0; height: 100%; }
 body {
   background: var(--bg);
   color: var(--ink);
-  font: 11px/1.2 -apple-system, "Segoe UI", system-ui, sans-serif;
+  font: 11px/1.25 var(--font-body);
   -webkit-font-smoothing: antialiased;
   overflow: hidden;
   user-select: none;
   cursor: default;
+}
+
+/* ---------- brand typography ---------- */
+
+/* Headings, tabs and section labels in Unbounded; it is a wide face, so the
+   tracking the panels add for uppercase labels is pulled back here. */
+h1, h2, h3, h4,
+.studio-tab, .studio-diag-title, .studio-fault-title,
+.title, .app-title, .modal-title, .modal-header h2, .analysis-section h3 {
+  font-family: var(--font-display);
+  letter-spacing: 0;
 }
 
 /* ---------- native controls ---------- */

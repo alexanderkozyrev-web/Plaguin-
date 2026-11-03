@@ -1,0 +1,24 @@
+/**
+ * Spilio brand faces — Unbounded (headings) and Onest (text), from the brand
+ * kit. Both are SIL Open Font License, subset to Latin + Cyrillic and packed as
+ * variable WOFF2 (see client/assets/fonts/OFL-*.txt).
+ *
+ * Linked from the shell and from every panel page; the paths are relative to
+ * this file, which is why the panels do not carry their own copy.
+ */
+
+@font-face {
+  font-family: "Unbounded";
+  src: url("assets/fonts/Unbounded-var.woff2") format("woff2");
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "Onest";
+  src: url("assets/fonts/Onest-var.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: block;
+}

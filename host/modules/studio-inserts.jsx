@@ -33,7 +33,7 @@
     var TEMPLATE_FILE = "/assets/fitme-studio-templates.aep";
     var TEMPLATE_COMP = "explanation comp for Claude";
     var TEMPLATE_TAG  = "[fitme-studio-template]";
-    var TEMPLATE_DIR  = "Spilio Studio templates";
+    var TEMPLATE_DIR  = "Spilio templates";
 
     var L_DISCLAIMER = "Long disclaimer [text]";
 
